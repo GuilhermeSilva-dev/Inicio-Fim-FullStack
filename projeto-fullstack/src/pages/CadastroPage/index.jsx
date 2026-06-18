@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import api from '../../services/api';
 import './style.css';
+import { useState } from 'react';
 
 export default function CadastroPage() {
     const [nome, setNome] = useState('');
@@ -15,7 +16,7 @@ export default function CadastroPage() {
         setSenha('');
     }
 
-    async function enviarFormulario(event) {
+    async function envioDoFormulario(event) {
         //evitar que a página seja recarregada ao enviar o formulário
         event.preventDefault();
         setEstaEnviando(true);
@@ -45,4 +46,45 @@ export default function CadastroPage() {
             setEstaEnviando(false);
         }
     }
+
+    return (
+        <div className="cadastro-page">
+            <form onSubmit={envioDoFormulario}>
+                <div className="grupo-form">
+                    <label htmlFor="campo-nome">Nome:</label>
+                    <input
+                        id='campo-nome'
+                        type="text"
+                        placeholder='Ex.: Maria Silva'
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                        />
+                </div>
+                <div className="grupo-form">
+                    <label htmlFor="campo-email">email:</label>
+                    <input
+                        id='campo-email'
+                        type="email"
+                        placeholder='Ex.: maria@gmail.com'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                </div>
+                <div className="grupo-form">
+                    <label htmlFor="campo-senha">senha:</label>
+                    <input
+                        id='campo-senha'
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        />
+                </div>
+
+                <button type='submit' disabled={estaEnviando}>
+                    {estaEnviando ? 'Cadastrando...' : 'Cadastrar'}
+                </button>
+
+            </form>
+        </div>
+    )
 }
